@@ -1,0 +1,18 @@
+database:
+  image: microsoft/mssql-server-linux
+  environment: 
+    - 'ACCEPT_EULA=Y' 
+    - 'SA_PASSWORD=MyComplexPassword!234' 
+  ports:
+      - "1433:1433"
+  volumes: 
+    - sqlvolume:/var/opt/mssql
+
+dotnetapp:
+  image: sellingstuffdotnet
+  links: 
+    - database
+  ports:
+    - "8080:80"
+  environment: 
+    - ASPNETCORE_ENVIRONMENT=Development
